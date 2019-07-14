@@ -15,6 +15,10 @@ class ViewController: UIViewController {
         view.addSubview(headerLabel)
         view.addSubview(searchTextField)
         view.addSubview(searchButton)
+        view.addSubview(temperatureLabel)
+        view.addSubview(temperatureValueLabel)
+        view.addSubview(descriptionLabel)
+        view.addSubview(descriptionValueLabel)
         view.setNeedsUpdateConstraints()
     }
 
@@ -49,7 +53,32 @@ class ViewController: UIViewController {
         
         return view
     }()
-
+    
+    ///function to create Label
+    func createLabel(text: String) -> UILabel {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.text = text
+        view.font = view.font.withSize(20)
+        return view
+    }
+    
+    lazy var temperatureLabel: UILabel! = {
+        return createLabel(text: "Temperature:")
+    }()
+    
+    lazy var temperatureValueLabel: UILabel! = {
+        return createLabel(text: "20°C")
+    }()
+    
+    lazy var descriptionLabel: UILabel! = {
+        return createLabel(text: "Description:")
+    }()
+    
+    lazy var descriptionValueLabel: UILabel! = {
+        return createLabel(text: "Sunny")
+    }()
+    
     override func updateViewConstraints() {
         let margins = view.layoutMarginsGuide
         
@@ -61,6 +90,18 @@ class ViewController: UIViewController {
         
         searchButton.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: 20).isActive = true
         searchButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 5).isActive = true
+        
+        temperatureLabel.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 20).isActive = true
+        temperatureLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        temperatureValueLabel.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 20).isActive = true
+        temperatureValueLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 10).isActive = true
+        
+        descriptionLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: 20).isActive = true
+        descriptionLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        descriptionValueLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: 20).isActive = true
+        descriptionValueLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 10).isActive = true
         
         super.updateViewConstraints()
     }
