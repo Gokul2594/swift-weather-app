@@ -69,8 +69,8 @@ class ViewController: UIViewController {
             print("Error getting data")
             return
         }
-        
-        let weatherData = ApiManager.getWeatherDate(location: location)
+        let apiManager = ApiManager()
+        let weatherData = apiManager.getWeatherDate(location: location)
         
         temperatureValueLabel.text = String(weatherData.currentTemperature) + "°C"
         descriptionValueLabel.text = weatherData.description
