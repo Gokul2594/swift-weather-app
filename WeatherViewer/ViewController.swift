@@ -19,6 +19,8 @@ class ViewController: UIViewController {
         view.addSubview(temperatureValueLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(descriptionValueLabel)
+        
+        toggleDisplay(isHidden: true)
         view.setNeedsUpdateConstraints()
     }
 
@@ -50,9 +52,30 @@ class ViewController: UIViewController {
         view.setTitleColor(UIColor.black, for: .normal)
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.black.cgColor
+        view.addTarget(self, action: #selector(onSearchClicked), for: .touchDown)
         
         return view
     }()
+    
+    private func toggleDisplay(isHidden: Bool) {
+        temperatureLabel.isHidden = isHidden
+        temperatureValueLabel.isHidden = isHidden
+        descriptionLabel.isHidden = isHidden
+        descriptionValueLabel.isHidden = isHidden
+    }
+    
+    @objc func onSearchClicked() {
+        guard let location = searchTextField.text else {
+            print("Error getting data")
+            return
+        }
+        
+        let weatherData = ApiManager.getWeatherDate(location: location)
+        
+        temperatureValueLabel.text = String(weatherData.currentTemperature) + "°C"
+        descriptionValueLabel.text = weatherData.description
+        toggleDisplay(isHidden: false)
+    }
     
     ///function to create Label
     func createLabel(text: String) -> UILabel {
